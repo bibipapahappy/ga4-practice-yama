@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>Hello Analytics!</title>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-M9M3QPZ118"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXX');
+  </script>
+</head>
+<body>
+  <h1>🚀 Hello Analytics!</h1>
+  <p>GA4 が動いているか、リアルタイムレポートでチェックしよう。</p>
+  <button onclick="gtag('event','click_test',{event_category:'Test',event_label:'ボタンクリック'});">
+    イベント送信テスト
+  </button>
+</body>
+</html>
