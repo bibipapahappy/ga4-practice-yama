@@ -2,21 +2,87 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8">
-  <title>Hello Analytics!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>平松剛法律事務所 | GA4 テストサイト</title>
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-M9M3QPZ118"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag(){dataLayer.push(arguments);}  
     gtag('js', new Date());
-    gtag('config', 'G-XXXXXXX');
+    gtag('config', 'G-M9M3QPZ118');
   </script>
+  <style>
+    body { font-family: "Yu Gothic", sans-serif; color: #333; margin: 0; padding: 0; }
+    header { background: #004a99; color: #fff; padding: 20px; }
+    .container { width: 90%; max-width: 1000px; margin: auto; }
+    nav a { color: #fff; margin-right: 15px; text-decoration: none; font-weight: bold; }
+    .hero { background: url('https://source.unsplash.com/1600x600/?law,office') no-repeat center/cover; color: #fff; text-align: center; padding: 120px 0; }
+    .hero h1 { font-size: 48px; margin: 0 0 10px; }
+    .hero p { font-size: 18px; }
+    section { padding: 60px 0; }
+    .services { display: flex; gap: 20px; flex-wrap: wrap; }
+    .service { background: #f5f5f5; padding: 20px; border-radius: 5px; flex: 1; min-width: 200px; }
+    .service h3 { margin-top: 0; }
+    footer { background: #222; color: #ccc; text-align: center; padding: 20px 0; font-size: 14px; }
+    button { background: #004a99; color: #fff; border: none; padding: 10px 20px; border-radius: 3px; cursor: pointer; }
+    button:hover { opacity: 0.9; }
+  </style>
 </head>
 <body>
-  <h1>🚀 Hello Analytics!</h1>
-  <p>GA4 が動いているか、リアルタイムレポートでチェックしよう。</p>
-  <button onclick="gtag('event','click_test',{event_category:'Test',event_label:'ボタンクリック'});">
-    イベント送信テスト
-  </button>
+  <header>
+    <div class="container">
+      <h1>平松剛法律事務所</h1>
+      <nav>
+        <a href="#about">事務所について</a>
+        <a href="#services">業務内容</a>
+        <a href="#contact">お問い合わせ</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="hero">
+    <div class="container">
+      <h1>安心と信頼のリーガルサポート</h1>
+      <p>企業のDX推進から労働問題まで、幅広く対応いたします。</p>
+    </div>
+  </div>
+
+  <section id="about" class="container">
+    <h2>事務所について</h2>
+    <p>平松剛法律事務所は、全国13拠点で展開する法律事務所です。社内SE経験を活かしたDX／BPR支援を得意としており、労働問題や契約書レビューなど、多彩なサービスを提供しております。</p>
+  </section>
+
+  <section id="services" class="container">
+    <h2>業務内容</h2>
+    <div class="services">
+      <div class="service">
+        <h3>DXコンサルティング</h3>
+        <p>最新テクノロジーを活用し、業務プロセスを最適化します。</p>
+      </div>
+      <div class="service">
+        <h3>労働問題対応</h3>
+        <p>労使トラブルの予防と解決をサポートします。</p>
+      </div>
+      <div class="service">
+        <h3>契約書レビュー</h3>
+        <p>リスクを抑えた契約書作成・チェックを行います。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="container">
+    <h2>お問い合わせ</h2>
+    <p>ご相談やお見積り依頼はこちらからお気軽にご連絡ください。</p>
+    <button onclick="gtag('event','contact_click',{event_category:'Contact',event_label:'お問い合わせボタン'});">
+      お問い合わせフォームへ
+    </button>
+  </section>
+
+  <footer>
+    <div class="container">
+      &copy; 2025 平松剛法律事務所 - All Rights Reserved.
+    </div>
+  </footer>
 </body>
 </html>
