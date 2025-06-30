@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>シンプルプロジェクト管理ツール</title>
+  <style>
+    body { font-family: "Yu Gothic", sans-serif; margin:0; padding:0; }
+    header { background:#004a99; color:#fff; padding:20px; }
+    .container { width:90%; max-width:1000px; margin:auto; }
+    nav a { color:#fff; margin-right:15px; text-decoration:none; font-weight:bold; }
+    h1 { margin:0; }
+    main { padding:20px 0; display:flex; gap:20px; }
+    .column { flex:1; background:#f5f5f5; padding:10px; border-radius:5px; }
+    .column h2 { margin-top:0; text-align:center; }
+    .task { background:#fff; border:1px solid #ddd; padding:10px; margin-bottom:10px; border-radius:4px; }
+    label { display:block; margin-top:10px; }
+    input, textarea, select { width:100%; padding:5px; box-sizing:border-box; }
+    button { margin-top:10px; padding:8px 12px; background:#004a99; color:#fff; border:none; border-radius:3px; cursor:pointer; }
+    button:hover { opacity:0.9; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>プロジェクト管理</h1>
+      <nav>
+        <a href="index.html">ホーム</a>
+      </nav>
+    </div>
+  </header>
+  <div class="container">
+    <section>
+      <h2>タスク追加</h2>
+      <form id="taskForm">
+        <label>タイトル<input type="text" id="title" required></label>
+        <label>担当者<input type="text" id="assignee"></label>
+        <label>期限<input type="date" id="due"></label>
+        <label>説明<textarea id="desc"></textarea></label>
+        <button type="submit">追加</button>
+      </form>
+    </section>
+    <main>
+      <div class="column" id="todo">
+        <h2>To Do</h2>
+      </div>
+      <div class="column" id="inprogress">
+        <h2>In Progress</h2>
+      </div>
+      <div class="column" id="done">
+        <h2>Done</h2>
+      </div>
+    </main>
+  </div>
+  <script>
+    const columns = { todo: document.getElementById('todo'), inprogress: document.getElementById('inprogress'), done: document.getElementById('done') };
+    const form = document.getElementById('taskForm');
+
+    function save() {
+      const data = Array.from(document.querySelectorAll('.task')).map(task => ({
+        id: task.dataset.id,
+        title: task.querySelector('.title').textContent,
+        assignee: task.querySelector('.assignee').textContent,
+        due: task.querySelector('.due').textContent,
+        desc: task.querySelector('.desc').textContent,
+        status: task.parentElement.id
+      }));
+      localStorage.setItem('tasks', JSON.stringify(data));
+    }
+
+    function load() {
+      const tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+      tasks.forEach(t => addTask(t, false));
+    }
+
+    function createTaskElement({id, title, assignee, due, desc}) {
+      const div = document.createElement('div');
+      div.className = 'task';
+      div.dataset.id = id;
+      div.innerHTML = `
+        <strong class="title"></strong><br>
+        <span class="assignee"></span> | <span class="due"></span>
+        <p class="desc"></p>
+        <select class="status">
+          <option value="todo">To Do</option>
+          <option value="inprogress">In Progress</option>
+          <option value="done">Done</option>
+        </select>
+        <button class="delete">削除</button>
+      `;
+      div.querySelector('.title').textContent = title;
+      div.querySelector('.assignee').textContent = assignee;
+      div.querySelector('.due').textContent = due;
+      div.querySelector('.desc').textContent = desc;
+      return div;
+    }
+
+    function addTask(data, saveFlag=true) {
+      if(!data.id) data.id = Date.now().toString();
+      const taskEl = createTaskElement(data);
+      columns[data.status || 'todo'].appendChild(taskEl);
+      if(saveFlag) save();
+    }
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const data = {
+        title: document.getElementById('title').value,
+        assignee: document.getElementById('assignee').value,
+        due: document.getElementById('due').value,
+        desc: document.getElementById('desc').value
+      };
+      addTask(data);
+      form.reset();
+    });
+
+    document.addEventListener('change', e => {
+      if(e.target.classList.contains('status')) {
+        const task = e.target.closest('.task');
+        columns[e.target.value].appendChild(task);
+        save();
+      }
+    });
+
+    document.addEventListener('click', e => {
+      if(e.target.classList.contains('delete')) {
+        const task = e.target.closest('.task');
+        task.remove();
+        save();
+      }
+    });
+
+    load();
+  </script>
+</body>
+</html>
